@@ -5,6 +5,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.0;
+
 import "./ERC20.sol";
 
 contract Bitxcoin is ERC20, Ownable {
@@ -14,13 +15,13 @@ contract Bitxcoin is ERC20, Ownable {
     bool takeStakeFees = false;
 
     constructor() ERC20("Bitxcoin", "BITX") {
-        _mint(liquidityWallet, 180000000 * 10**8 );
-        _mint(marketingWallet, 10000000 * 10**8 );
-        _mint(strategicSalesWallet, 50000000 * 10**8 );
-        _mint(gameOperationsWallet, 50000000 * 10**8 );
+        _mint(liquidityWallet, 59142504 * 10**8 );
+        _mint(marketingWallet, 3900000 * 10**8 );
+        _mint(strategicSalesWallet, 10000000 * 10**8 );
+        _mint(gameOperationsWallet, 20000000 * 10**8 );
         _mint(teamWallet, 10000000 * 10**8 );
-        _mint(communityAirdropWallet, 10000000 * 10**8 );
-        _mint(bitxLiabilityWallet, 50000000 * 10**8 );
+        _mint(communityAirdropWallet, 54385008 * 10**8 );
+        _mint(Publicsale, 20000000 * 10**8 );
 
         _isExcludedFromFee[owner()] = true;
         _isExcludedFromFee[liquidityWallet] = true;
@@ -31,7 +32,7 @@ contract Bitxcoin is ERC20, Ownable {
         _isExcludedFromFee[teamWallet] = true;
         _isExcludedFromFee[communityAirdropWallet] = true;
         _isExcludedFromFee[burnWallet] = true;
-        _isExcludedFromFee[bitxLiabilityWallet] = true;
+        _isExcludedFromFee[Publicsale] = true;
         _isExcludedFromFee[address(this)] = true;
 
         _includeInSell[owner()] = true;
@@ -43,7 +44,7 @@ contract Bitxcoin is ERC20, Ownable {
         _includeInSell[teamWallet] = true;
         _includeInSell[communityAirdropWallet] = true;
         _includeInSell[burnWallet] = true;
-         _includeInSell[bitxLiabilityWallet] = true;
+         _includeInSell[Publicsale] = true;
         _includeInSell[address(this)] = true;
 
         pancakeRouter = IRouter(0x10ED43C718714eb63d5aA57B78B54704E256024E);
@@ -55,7 +56,7 @@ contract Bitxcoin is ERC20, Ownable {
 
         setStakeAddress(stakeAddress);
 
-        maxTxAmount = 110000 * 10**9 ;
+        maxTxAmount = 110000 * 10**8 ;
     }
 
     function excludeFromFee(address account) external onlyOwner {
@@ -207,13 +208,13 @@ contract Bitxcoin is ERC20, Ownable {
         whitelistWallet(teamWallet);
         return true;
     }
-    function setbitxLiabilityWallet(address payable _address)
+    function setPublicsale(address payable _address)
         external
         onlyOwner
         returns (bool)
     {
-        bitxLiabilityWallet = _address;
-        whitelistWallet(bitxLiabilityWallet);
+        Publicsale = _address;
+        whitelistWallet(Publicsale);
         return true;
     }
 
@@ -303,7 +304,7 @@ contract Bitxcoin is ERC20, Ownable {
     }
 
     function setMaxSellAmountPerDay(uint256 amount) external onlyOwner {
-        maxSellPerDay = amount * 10**9;
+        maxSellPerDay = amount * 10**8;
     }
 
     function isExcludedFromFee(address account) public view returns (bool) {
