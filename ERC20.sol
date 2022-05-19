@@ -31,16 +31,16 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     mapping(address => bool) internal _includeInSell;
     mapping(address => bool) internal _isBadActor;
 
-    uint256 public maxSellPerDay = 150 * 10**9;
+    uint256 public maxSellPerDay = 150 * 10**8;
 
     uint256 private _totalSupply;
     uint256 public maxTxAmount;
 
-    uint256 public buyLimit = 7000 * 10**9;
-    uint256 public sellLimit = 2000 * 10**9;
+    uint256 public buyLimit = 7000 * 10**8;
+    uint256 public sellLimit = 2000 * 10**8;
 
-    uint256 public burnDifference = 11 * 10**6 * 10**9;
-    uint256 public maxBurnAmount = 502700 * 10**9;
+    uint256 public burnDifference = 11 * 10**6 * 10**8;
+    uint256 public maxBurnAmount = 502700 * 10**8;
 
     uint256 public timeLimit;
     uint256 public maxSellPerDayLimit;
@@ -78,7 +78,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         payable(0x89FF72f40CAA8f24b21c14715C15a540f0db1636);
     address payable public burnWallet =
         payable(0x394E058A7bC2704236B1347cbF0114E1BA50BF26);
-    address payable public bitxLiabilityWallet =
+    address payable public Publicsale =
         payable(0x322DbDB5a902d1edE18fe8Dbd582fc8d95795a01);    
 
     struct feeRatesStruct {
@@ -115,7 +115,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     event Burn(address indexed from, uint256 value);
 
     constructor(string memory name_, string memory symbol_) {
-        maxSellPerDayLimit = 1 * 10**9;
+        maxSellPerDayLimit = 1 * 10**8;
         timeLimit = block.timestamp;
         _name = name_;
         _symbol = symbol_;
@@ -130,7 +130,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
     }
 
     function decimals() public view virtual override returns (uint8) {
-        return 9;
+        return 8;
     }
 
     function totalSupply() public view virtual override returns (uint256) {
@@ -262,7 +262,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
                         "maxSellPerDay Limit Exceeded"
                     );
                     timeLimit = block.timestamp;
-                    maxSellPerDayLimit = 1 * 10**9 ;
+                    maxSellPerDayLimit = 1 * 10**8 ;
                 }
                 if (block.timestamp < _firstSell[sender] + 24 * 1 hours) {
                     require(
@@ -274,7 +274,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
                     if (block.timestamp < timeLimit + 24 * 1 hours) {
                         maxSellPerDayLimit += amount;
                     } else {
-                        maxSellPerDayLimit = 1 * 10**9 ;
+                        maxSellPerDayLimit = 1 * 10**8 ;
                         timeLimit = block.timestamp;
                     }
                 } else {
@@ -288,7 +288,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
                     if (block.timestamp < timeLimit + 24 * 1 hours) {
                         maxSellPerDayLimit += amount;
                     } else {
-                        maxSellPerDayLimit = 1 * 10**9 ;
+                        maxSellPerDayLimit = 1 * 10**8 ;
                         timeLimit = block.timestamp;
                     }
                 }
@@ -392,7 +392,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
         burnWallet.sendValue(
             (transferBalance * appliedFees.burnFee) / appliedFees.swapFee
         );
-        bitxLiabilityWallet.sendValue(
+        Publicsale.sendValue(
             (transferBalance * appliedFees.liabilityFee) / appliedFees.swapFee
         );
         marketingWallet.sendValue(address(this).balance);
